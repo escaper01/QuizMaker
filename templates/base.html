@@ -1,0 +1,90 @@
+{% load static %}
+    
+    <!DOCTYPE html>
+    <html lang="en">
+    
+    <head>
+      <meta charset="utf-8">
+      <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    
+      <title>{% block title %} {% endblock %}</title>
+      <meta content="" name="descriptison">
+      <meta content="" name="keywords">
+    
+      <!-- Favicons -->
+      <link href="{% static 'assets/img/favicon.png' %}" rel="icon">
+      <link href="{% static 'assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+    
+      <!-- CSS Frameworks -->
+      <link href="{% static 'assets/frameworks/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+      <link href="{% static 'assets/frameworks/remixicon/remixicon.css' %}" rel="stylesheet">
+      <link href="{% static 'assets/frameworks/aos/aos.css' %}" rel="stylesheet">
+    
+      <!-- Template Main CSS File -->
+      <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+    </head>
+    
+    <body {% if 'fill_info' in request.path %} style="background-color: #F4F6F6;" {% elif 'start_quiz' in request.path %} style="background-color:rgb(239, 241, 243,0.6);" {% endif %}>
+      <!-- ======= Header ======= -->
+      <header id="header" class="fixed-top" style="{% if request.path != '/' %}background-color:black;margin-bottom:200px;{% endif %}">
+        
+        <div class="container-fluid d-flex align-items-center justify-content-between">
+    
+          <h1 class="logo"><a href="{% url 'index' %}">Dewi</a></h1>
+
+          <!-- Uncomment below if you prefer to use an image logo -->
+          <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+          {% if request.user.is_authenticated %}
+          <nav class="nav-menu d-none d-lg-block">
+            <ul>
+              <li class="active"><a href="{% url 'index' %}">Home</a></li>
+              <li><a href="{% url 'grades' %}">dashboard</a></li>
+              <li><a href="#services">Services</a></li>
+              <li><a href="#portfolio">Portfolio</a></li>
+              <li><a href="#team">Team</a></li>
+              <li><a href="#contact">Contact</a></li>
+    
+            </ul>
+          </nav><!-- .nav-menu -->
+          <a href="#about" class="get-started-btn scrollto">Get Started</a>
+          {% endif %}
+        </div>
+        
+      </header>
+      <!-- End Header -->
+      {% if request.path != '/' %}
+      <div style="margin-bottom:90px;"></div>
+      {% endif %}
+
+
+      {% block content %} 
+      
+      
+      {% endblock %}
+    
+      <!-- ======= Footer ======= -->
+      <footer id="footer">
+        <div class="container">
+          <div class="copyright">
+            &copy; Copyright <strong><span>Dewi</span></strong>. All Rights Reserved
+          </div>
+          <div class="credits">
+            Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+          </div>
+        </div>
+      </footer><!-- End Footer -->
+    
+      <a href="#" class="back-to-top"><i class="ri-arrow-up-line"></i></a>
+      <div id="preloader"></div>
+    
+      <script src="{% static 'assets/frameworks/jquery/jquery.min.js' %}"></script>
+      <script src="{% static 'assets/frameworks/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+      <script src="{% static 'assets/frameworks/jquery.easing/jquery.easing.min.js' %}"></script>
+      <script src="{% static 'assets/frameworks/aos/aos.js' %}"></script>
+    
+      <!-- Template Main JS File -->
+      <script src="{% static 'assets/js/main.js' %}"></script>
+    
+    </body>
+    
+    </html>

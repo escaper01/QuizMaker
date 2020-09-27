@@ -1,0 +1,18 @@
+{% extends 'base.html' %} 
+{% block title %} home page{% endblock %} 
+{% block content %} 
+
+ <!-- ======= Hero Section ======= -->
+<section id="hero">
+    <div class="hero-container" data-aos="fade-up" data-aos-delay="150">
+      <h1>Plan. Launch. Grow.</h1>
+      <h2>We are team of talanted designers making websites with Bootstrap</h2>
+      <div class="d-flex">
+        <a href="{% url 'fill_info' %}" class="btn-get-started" style="background-color:#1982c4;border: 2px solid #1982c4">I'm a student</a>
+        <span style="width:20px;"></span>
+        <a href="#about" class="btn-get-started" style="background-color:#ff595e;border: 2px solid #ff595e">I'm a teacher</a>
+      </div>
+    </div>
+  </section><!-- End Hero -->
+
+{% endblock %}

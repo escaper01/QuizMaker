@@ -1,0 +1,58 @@
+{% extends 'base.html' %} 
+{% block title %} starting quiz {% endblock %} 
+{% block content %} 
+
+<div style="margin-right:80px;margin-left:80px;">
+    <h1>
+        {{ quiz.title }}
+        </h1>
+        <form method="post">
+        {% csrf_token %}
+        
+
+        {% for question in questions %}
+        <div >
+            <!-- LISTENING && READING parts-->
+            {% if forloop.counter == 1 %}
+            <h1> I - Listening Part </h1>
+            {% elif forloop.counter == 4 %}
+            <h1> II - Reading Part </h1>
+            {% endif %}
+            <h3 class="question-wrapper"> <span>{{ forloop.counter }} -</span> {{ question }}</h3>
+            <div class="answer-wrapper">
+                <ul class="list-group list-group-flush">
+                    
+                        <li class="list-group-item">
+                                <input type="radio" id="choice1" name="{{question.pk}}" value="a">
+                                <span>{{question.choice1}}<span> 
+                        </li>
+                        <li class="list-group-item">            
+                                <input type="radio" id="choice2" name="{{question.pk}}" value="b">
+                                <span>{{question.choice2}}<span> 
+                        </li>
+                        <li class="list-group-item">
+                                <input type="radio" id="choice3" name="{{question.pk}}" value="c">
+                                <span>{{question.choice3}}<span> 
+                        </li>
+                        <li class="list-group-item">
+                                <input type="radio" id="choice4" name="{{question.pk}}" value="d">
+                                <span>{{question.choice4}}
+                        </li>
+                        
+                </ul>
+            </div>
+        </div>
+        <br>
+        {% endfor %}
+        <div class="form-group">
+                        <div class="col">
+        
+                            <!-- Submit button -->
+                            <button type="submit" class="btn btn-primary btn-block" id="submit">Save</button>
+        
+                        </div>
+                    </div>
+        <form>
+        
+        {% endblock %}
+</div>

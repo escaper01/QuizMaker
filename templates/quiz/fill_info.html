@@ -1,0 +1,78 @@
+{% extends 'base.html' %} 
+{% block title %} fill info {% endblock %}
+ {% block content %} 
+ 
+ <div class="container py-3">
+    <div class="row">
+        <div class="mx-auto col-sm-6">
+                    <!-- form user info -->
+                    <div class="card">
+                        
+                        <div class="card-body">
+        <form action="" method="post" autocomplete="off">
+
+            {% csrf_token %}
+            <!--first_name-->
+            <div class="form-group">
+                <div class="col">
+
+                    <!-- Errors - first_name -->
+                    {% if form.first_name.errors %}
+                    <label class="alert alert-danger">{{ form.first_name.errors }}</label> {% endif %}
+                    <label>FIRST NAME</label>
+                    <!-- Form field - first_name -->
+                    <input type="text" placeholder="first_name" class="form-control" name="first_name" id="first_name" value="{{ form.first_name.value|default:" " }}">
+
+                </div>
+            </div>
+
+            <!--last_name-->
+            <div class="form-group">
+                <div class="col">
+
+                    <!-- Errors - last_name -->
+                    {% if form.last_name.errors %}
+                    <label class="alert alert-danger">{{ form.last_name.errors }}</label> {% endif %}
+                    <label>LAST NAME</label>
+                    <!-- Form field - last_name -->
+                    <input type="text" placeholder="last_name" class="form-control" name="last_name" id="last_name" value="{{ form.last_name.value|default:" " }}">
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col">
+
+                    <!-- Errors - quiz -->
+                    {% if form.quiz.errors %}
+                    <label class="alert alert-danger">{{ form.quiz.errors }}</label> {% endif %}
+                    <label>QUIZ</label>
+                    <!-- Form field - quiz -->
+                    <select type="text" placeholder="quiz" class="form-control" name="quiz" id="quiz" value="{{ form.quiz.value|default:" " }}">
+                    <option value="test1">test1</option>
+                    <option value="test2">test2</option>
+                    </select>
+
+                </div>
+            </div>
+
+            
+
+
+            <div class="form-group">
+                <div class="col">
+
+                    <!-- Submit button -->
+                    <button type="submit" class="btn btn-primary btn-block" id="submit">Save</button>
+
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+<!-- /form user info -->
+</div>
+</div>
+</div>
+ {% endblock %}
