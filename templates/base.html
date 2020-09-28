@@ -24,7 +24,7 @@
       <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
     </head>
     
-    <body {% if 'fill_info' in request.path %} style="background-color: #F4F6F6;" {% elif 'start_quiz' in request.path %} style="background-color:rgb(239, 241, 243,0.6);" {% endif %}>
+    <body {% if 'fill_info' or 'login' in request.path %} style="background-color: #F4F6F6;" {% elif 'start_quiz' in request.path %} style="background-color:rgb(239, 241, 243,0.6);" {% endif %}>
       <!-- ======= Header ======= -->
       <header id="header" class="fixed-top" style="{% if request.path != '/' %}background-color:black;margin-bottom:200px;{% endif %}">
         
@@ -37,16 +37,18 @@
           {% if request.user.is_authenticated %}
           <nav class="nav-menu d-none d-lg-block">
             <ul>
-              <li class="active"><a href="{% url 'index' %}">Home</a></li>
-              <li><a href="{% url 'grades' %}">dashboard</a></li>
-              <li><a href="#services">Services</a></li>
-              <li><a href="#portfolio">Portfolio</a></li>
-              <li><a href="#team">Team</a></li>
-              <li><a href="#contact">Contact</a></li>
+              <li {% if '/' == request.path %}class="active" {% endif %}><a href="{% url 'index' %}">Home</a></li>
+              <li {% if 'grades' in request.path %}class="active" {% endif %}><a href="{% url 'grades' %}">Grades</a></li>
+              
     
             </ul>
           </nav><!-- .nav-menu -->
-          <a href="#about" class="get-started-btn scrollto">Get Started</a>
+          {% if request.user.is_authenticated %}
+          <a href="{% url 'logout' %}" class="get-started-btn scrollto">Log out</a>
+          {% else %}
+          <a href="{% url 'login' %}" class="get-started-btn scrollto">Log in</a>
+          {% endif %}
+          
           {% endif %}
         </div>
         

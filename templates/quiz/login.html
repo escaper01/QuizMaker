@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% block title %}
+{% endblock  %}
+
+{% block content %}
+
+<div class="container py-3">
+    <div class="row">
+        <div class="mx-auto col-sm-6">
+                    <!-- form user info -->
+                    <div class="card">
+                        
+                        <div class="card-body">
+
+        <!-- Errors messages -->
+        <div class="col">
+
+            {% if form.errors %}
+            <div class="alert alert-danger">Your username Or password didn't match. Please try again.</div>
+            {% else %} {% if next %} {% if user.is_authenticated %}
+            <div class="alert alert-info">Your account doesn't have access to this page. To proceed, please login with an account that has access.
+            </div>
+            {% else %}
+            <div class="alert alert-info">Please login to see this page.</div>
+            {% endif %} {% endif %} {% endif %}
+
+        </div>
+
+        <!-- Form - Login -->
+        <form method="post" action="{% url 'login' %}" class="">
+
+            {% csrf_token %}
+
+            <div class="form-group">
+                <div class="col">
+
+                    <!-- Form field - username -->
+                    <input type="text" placeholder="Username" class="form-control" name="username">
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col">
+
+                    <!-- Form field - password -->
+                    <input type="password" placeholder="Password" class="form-control" name="password">
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+
+                    <input type="submit" class="btn  btn-primary btn-block" value="Login" />
+
+                </div>
+            </div>
+
+            <!-- Form field - next -->
+            <!-- Used to configure redirect after successful login -->
+            <input type="hidden" name="next" value="{% url 'index' %}" />
+
+        </form>
+    </div>
+</div>
+<!-- /form user info -->
+</div>
+</div>
+</div>
+
+{% endblock %}

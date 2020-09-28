@@ -64,7 +64,7 @@ def fill_info(request):
         return redirect(reverse('start_quiz',args=[test_name]))
     return render(request,'quiz/fill_info.html')
 
-@login_required
+@login_required(login_url='login')
 def grades(request):
     students = Student.objects.all()
     context = {
