@@ -7,6 +7,42 @@ grades
 {% block content %}
 
 
+<div class="container py-3">
+  <div class="row">
+      <div class="mx-auto col-10">
+          <!-- form user info -->
+            <div class="card">
+                <div class="card-body">
+<form action="" method="post" autocomplete="off">
+  {% csrf_token %}
+  <div class="form-row">
+
+      <div class="col-6 form-group">
+          <input type="text" class="form-control" name = "first_name" placeholder="FIRST NAME">
+      </div>
+      <div class="col-6 form-group">
+          <input type="text" class="form-control" name = "last_name" placeholder="LAST NAME">
+      </div>
+      <div class="col-10 form-group">
+          <input type="date" class="form-control" name = "date" placeholder="DATE" id='myDate'>
+      </div>
+      <div class="col-2 form-group">
+        <button type="button" class="btn btn-info" onclick='document.getElementById("myDate").defaultValue = "";' >Reset Date</button>
+    </div>
+      <div class="col-12 form-group">
+            <!-- Submit button -->
+            <button type="submit" class="btn btn-primary btn-block" id="submit">Save</button>
+    </div>
+  </div>
+</form>
+</div>
+</div>
+<!-- /form user info -->
+</div>
+</div>
+</div>
+
+
 <table class="table">
     <thead class="thead-dark">
       <tr>
@@ -33,4 +69,40 @@ grades
         {% endfor %}
     </tbody>
   </table>
+    <!-- Pagination -->
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center list-inline">
+          {% if students.has_previous %}
+          <li class="list-inline-item"><a class="page-link" href="?page=1"> first</a></li>
+          <li class="list-inline-item"><a class="page-link" href="?page={{ students.previous_page_number }}">previous</a></li>
+          {% endif %}
+
+          <span class="page-item disabled">
+              <li class="list-inline-item"> <span class="page-link"> Page {{ students.number }} of {{ students.paginator.num_pages }}
+              </span>
+          </li>
+          </span>
+
+          {% if students.has_next %}
+          <li class="list-inline-item"><a class="page-link" href="?page={{ students.next_page_number }}">next</a></li>
+          {% endif %}
+      </ul>
+  </nav>
+  <script>
+    function formatDate(date) {
+      var d = new Date(date),
+          month = '' + (d.getMonth() + 1),
+          day = '' + d.getDate(),
+          year = d.getFullYear();
+  
+      if (month.length < 2) 
+          month = '0' + month;
+      if (day.length < 2) 
+          day = '0' + day;
+  
+      return [year, month, day].join('-');
+  }
+  
+  document.getElementById("myDate").defaultValue = formatDate(new Date());
+  </script>
 {% endblock %}
