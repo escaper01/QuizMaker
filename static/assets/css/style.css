@@ -741,3 +741,11 @@ section {
   background-color: white;
   padding: 25px;
 }
+
+#end_quiz_img{
+  background: url("../img/end_quiz.gif");
+  width: 100%;
+  height: 700px;
+  background-repeat: no-repeat;
+  background-position: center;
+}

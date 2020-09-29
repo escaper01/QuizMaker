@@ -1,15 +1,47 @@
 {% extends 'base.html' %} 
 {% block title %} starting quiz {% endblock %} 
+
+{% block style%}
+
+        <style>
+        .holder{
+                background-color: #ff6b35;
+                font-size: 20px;
+                color: #e9ff70;
+                line-height: 50px;
+                text-align: center;
+                border-radius: 20px 0px 20px;
+        }
+
+        #timer{
+                position: fixed;
+                right: 15px;
+                top: 100px;
+                z-index: 99999;
+        }
+        </style>
+{% endblock %}
+
 {% block content %} 
 
-<div style="margin-right:80px;margin-left:80px;">
-    <h1>
+<div id="timer">
+        <div class="holder">
+            <span id="min_sec">60 Min : 00 Sec</span>
+        </div>
+</div>
+
+<div style="margin-right:160px;margin-left:160px;">
+        <h4> TEST ID: 
         {{ quiz.title }}
-        </h1>
-        <form method="post">
-        {% csrf_token %}
+        </h4>
+        <audio controls autoplay style="display: none;">
+                <source src="{{quiz.audio.url}}" type="audio/ogg" >
+        </audio>
+
         
 
+        <form method="post" id="myform" action="{% url 'end_quiz' %}">
+        {% csrf_token %}
         {% for question in questions %}
         <div >
             <!-- LISTENING && READING parts-->
@@ -53,6 +85,37 @@
                         </div>
                     </div>
         <form>
-        
+        </div>
         {% endblock %}
-</div>
+{% block script %}
+<script>
+        function startTimer(duration, min_sec) {
+            var timer = duration, minutes, seconds;
+            setInterval(function () {
+                minutes = parseInt(timer / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+        
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+        
+                min_sec.textContent = ' '+minutes+' Min : '+seconds+' Sec ';
+                
+                if(minutes == 0){
+                    const myform = document.querySelector('#myform');
+                    myform.submit()
+                    //window.location.href = '/endtest'
+                }
+    
+                if (--timer < 0) {
+                    timer = duration;
+                }
+            }, 1000);
+        }
+        window.onload = function () {
+            var oneHour = 60 * 60;
+            const min_sec = document.querySelector('#min_sec');
+            startTimer(oneHour, min_sec);
+        };
+        
+</script>
+{% endblock %}

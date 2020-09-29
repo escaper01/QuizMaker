@@ -131,7 +131,7 @@
     $('#header').addClass('header-scrolled');
   }
 
-  // Back to top button
+  /* Back to top button
   $(window).scroll(function() {
     if ($(this).scrollTop() > 100) {
       $('.back-to-top').fadeIn('slow');
@@ -146,7 +146,7 @@
     }, 1500, 'easeInOutExpo');
     return false;
   });
-
+*/
 
  
 

@@ -22,6 +22,7 @@
     
       <!-- Template Main CSS File -->
       <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+      {% block style%}{% endblock %}
     </head>
     
     <body {% if 'fill_info' or 'login' in request.path %} style="background-color: #F4F6F6;" {% elif 'start_quiz' in request.path %} style="background-color:rgb(239, 241, 243,0.6);" {% endif %}>
@@ -30,7 +31,7 @@
         
         <div class="container-fluid d-flex align-items-center justify-content-between">
     
-          <h1 class="logo"><a href="{% url 'index' %}">Dewi</a></h1>
+          <h1 class="logo"><a href="{% url 'index' %}">ALCPT</a></h1>
 
           <!-- Uncomment below if you prefer to use an image logo -->
           <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
@@ -75,14 +76,20 @@
           </div>
         </div>
       </footer><!-- End Footer -->
-    
-      <a href="#" class="back-to-top"><i class="ri-arrow-up-line"></i></a>
+    <!--
+        <a href="#" class="back-to-top">
+        <i class="ri-arrow-up-line"></i>
+      </a>
+    -->
+      
       <div id="preloader"></div>
     
       <script src="{% static 'assets/frameworks/jquery/jquery.min.js' %}"></script>
       <script src="{% static 'assets/frameworks/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
       <script src="{% static 'assets/frameworks/jquery.easing/jquery.easing.min.js' %}"></script>
       <script src="{% static 'assets/frameworks/aos/aos.js' %}"></script>
+
+      {% block script%}{% endblock %}
     
       <!-- Template Main JS File -->
       <script src="{% static 'assets/js/main.js' %}"></script>
