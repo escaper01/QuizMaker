@@ -15,20 +15,29 @@ grades
                 <div class="card-body">
 <form action="" method="post" autocomplete="off">
   {% csrf_token %}
-  <div class="form-row">
-
-      <div class="col-6 form-group">
-          <input type="text" class="form-control" name = "first_name" placeholder="FIRST NAME">
+      <div class="form-row">
+          <div class="col-6 form-group">
+            <input type="text" class="form-control" name = "first_name" placeholder="FIRST NAME">
+          </div>
+        <div class="col-6 form-group">
+            <input type="text" class="form-control" name = "last_name" placeholder="LAST NAME">
+        </div>
+        <div class="col-10 form-group">
+            <input type="date" class="form-control" name = "date" placeholder="DATE" id='myDate'>
+        </div>
+        <div class="col-2 form-group">
+          <button type="button" class="btn btn-info" onclick='document.getElementById("myDate").defaultValue = "";' >Reset Date</button>
+        </div>      
+        <div class="col-4 form-group">
+        <input type="text" class="form-control" name = "rank" placeholder="RANK">
+        </div>
+      <div class="col-4 form-group">
+        <input type="text" class="form-control" name = "serial_number" placeholder="SERIAL NUMBER">
       </div>
-      <div class="col-6 form-group">
-          <input type="text" class="form-control" name = "last_name" placeholder="LAST NAME">
+      <div class="col-4 form-group">
+        <input type="text" class="form-control" name = "service" placeholder="SERVICE">
       </div>
-      <div class="col-10 form-group">
-          <input type="date" class="form-control" name = "date" placeholder="DATE" id='myDate'>
-      </div>
-      <div class="col-2 form-group">
-        <button type="button" class="btn btn-info" onclick='document.getElementById("myDate").defaultValue = "";' >Reset Date</button>
-    </div>
+      
       <div class="col-12 form-group">
             <!-- Submit button -->
             <button type="submit" class="btn btn-primary btn-block" id="submit">Search</button>
@@ -47,8 +56,11 @@ grades
     <thead class="thead-dark">
       <tr>
         <th scope="col">#</th>
+        <th scope="col">rank</th>
         <th scope="col">First Name</th>
         <th scope="col">Last Name</th>
+        <th scope="col">Serial Number</th>
+        <th scope="col">Service</th>
         <th scope="col">Listening Score</th>
         <th scope="col">Reading Score</th>
         <th scope="col">Score</th>
@@ -59,8 +71,11 @@ grades
         {% for student in students %}
       <tr>
         <th scope="row">{{forloop.counter}}</th>
+        <td>{{student.rank}}</td>
         <td>{{student.first_name}}</td>
         <td>{{student.last_name}}</td>
+        <td>{{student.serial_number}}</td>
+        <td>{{student.service}}</td>
         <td>{{student.listening_score}}</td>
         <td>{{student.reading_score}}</td>
         <td>{{student.score}}</td>

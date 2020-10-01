@@ -17,7 +17,6 @@ def index(request):
     return render(request,'quiz/index.html')
 
 def start_quiz(request,test_name):
-
     quiz = Quiz.objects.filter(title=test_name).get()
     questions = Question.objects.filter(quiz=quiz).all()
     questions_len = questions.count()
@@ -25,8 +24,9 @@ def start_quiz(request,test_name):
     #last index of the part I minus one
     index_target = 2
     middle_question_id = first_question_id + index_target
-
+    print('quiz started')
     if request.POST:
+        print(request.POST)
         readingScore = 0
         listeningScore = 0
         for elem in questions.values():
@@ -41,12 +41,15 @@ def start_quiz(request,test_name):
                 readingScore += 1
 
         s = Student(quiz =quiz,first_name=request.session.get('first_name'),
-                    last_name=request.session.get('last_name'),listening_score = listeningScore,
+                    last_name=request.session.get('last_name'),serial_number=request.session.get('serial_number'),
+                    instructor=request.session.get('instructor'),service=request.session.get('service'),
+                    rank=request.session.get('rank'),listening_score = listeningScore,
                     reading_score=readingScore, score=readingScore+listeningScore)
         s.save()
+        print('go to endquiz')
         return redirect('end_quiz')
                 
-
+    print('quiz not posted')
 
     
     dataQuiz = {
@@ -59,12 +62,24 @@ def end_quiz(request):
     return render(request,'quiz/end_quiz.html')
 
 def fill_info(request):
+    quizes = Quiz.objects.all().order_by('created')
+    instructors = Teacher.objects.all()
     if request.POST:
+        print(request.POST)
         request.session['first_name'] = request.POST.get('first_name')
         request.session['last_name'] = request.POST.get('last_name')
+        request.session['serial_number'] = request.POST.get('serial_number')
+        request.session['service'] = request.POST.get('service')
+        request.session['instructor'] = request.POST.get('instructor')
+        request.session['rank'] = request.POST.get('rank')
         test_name = request.POST.get('quiz')
         return redirect(reverse('start_quiz',args=[test_name]))
-    return render(request,'quiz/fill_info.html')
+
+    context = {
+        'quizes': quizes,
+        'instructors':instructors
+    }
+    return render(request,'quiz/fill_info.html', context)
 
 
 
@@ -75,14 +90,21 @@ def grades(request):
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
         date = request.POST.get('date')
+        rank = request.POST.get('rank')
+        serial_number = request.POST.get('serial_number')
+        service = request.POST.get('service')
         if date == '':
             students_ls = Student.objects.filter(first_name__icontains=first_name,
                                             last_name__icontains=last_name,
-                                            date__date__lte=datetime.now()).order_by('-date')
+                                            date__date__lte=datetime.now(),rank__icontains= rank,
+                                            serial_number__icontains=serial_number,
+                                            service__icontains=service).order_by('-date')
         else:
             students_ls = Student.objects.filter(first_name__icontains=first_name,
                                             last_name__icontains=last_name,
-                                            date__date=parser.parse(date)).order_by('-date')
+                                            date__date=parser.parse(date),rank__icontains= rank,
+                                            serial_number__icontains=serial_number,
+                                            service__icontains=service).order_by('-date')
 
     paginator = Paginator(students_ls, NUM_OF_POSTS)  # Show NUM_OF_PAGES posts per page
     page = request.GET.get('page')

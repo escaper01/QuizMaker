@@ -40,7 +40,7 @@
 
         
 
-        <form method="post" id="myform" action="{% url 'end_quiz' %}">
+        <form method="POST" id="myform" action="">
         {% csrf_token %}
         {% for question in questions %}
         <div >

@@ -32,25 +32,36 @@
         <div class="container-fluid d-flex align-items-center justify-content-between">
     
           <h1 class="logo"><a href="{% url 'index' %}">ALCPT</a></h1>
-
+         
+          
           <!-- Uncomment below if you prefer to use an image logo -->
           <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
-          {% if request.user.is_authenticated %}
+          
           <nav class="nav-menu d-none d-lg-block">
             <ul>
+              {% if '/' != request.path %}
               <li {% if '/' == request.path %}class="active" {% endif %}><a href="{% url 'index' %}">Home</a></li>
+              {% endif %}
+              {% if request.user.is_authenticated %}
               <li {% if 'grades' in request.path %}class="active" {% endif %}><a href="{% url 'grades' %}">Grades</a></li>
-              
-    
+              {% endif %}
+              <li>
+                {% if request.user.is_authenticated %}
+                <p style="color: white;">Hi {{request.user.first_name}}</p>
+                {% else %}
+                <span style="color: white;">Hi Visitor</span>
+                {% endif %}
+              </li>
             </ul>
           </nav><!-- .nav-menu -->
           {% if request.user.is_authenticated %}
+          
           <a href="{% url 'logout' %}" class="get-started-btn scrollto">Log out</a>
-          {% else %}
-          <a href="{% url 'login' %}" class="get-started-btn scrollto">Log in</a>
-          {% endif %}
+          
           
           {% endif %}
+          
+          
         </div>
         
       </header>
