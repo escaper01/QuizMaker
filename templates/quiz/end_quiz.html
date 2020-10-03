@@ -10,8 +10,8 @@ end quiz
 
 </div>
 <div class="container">
-    <h1 style="text-align: center;">congratulation {{request.session.last_name}} {{request.session.first_name}}</h1>
-    <button type="button" class="btn btn-danger" onclick="closeBrowser()" style="width:100%" id="closebrowser">CLose</button>
+    <h1 style="text-align: center;">congratulation</h1>
+    <button type="button" class="btn btn-danger" onclick='closeBrowser()' style="width:100%" id="closebrowser">CLose</button>
 </div>
 
 {% endblock %}
@@ -20,10 +20,8 @@ end quiz
 {% block script %}
 <script>
     function closeBrowser(){
-        window.close();
+        window.location.href = '/'
     }
-
-    $('#closebrowser').click(closeBrowser)
 </script>
 
 {% endblock %}

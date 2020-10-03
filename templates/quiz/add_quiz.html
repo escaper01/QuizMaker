@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container py-3">
+    <div class="row">
+        <div class="mx-auto col-sm-6">
+            <div class="card">      
+                <div class="card-body">
+                    <form action="" method="POST" autocomplete="off">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <div class="col">
+            
+                                <!-- Errors - RANK -->
+                                {% if form.quiz.errors %}
+                                <label class="alert alert-danger">{{ form.quiz.errors }}</label> {% endif %}
+                                <label>TITLE</label>
+                                <!-- Form field - RANK -->
+                                <input type="text" placeholder="title" class="form-control" name="title" id="title" required>
+            
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col">
+            
+                                <!-- Errors - RANK -->
+                                {% if form.quiz.errors %}
+                                <label class="alert alert-danger">{{ form.quiz.errors }}</label> {% endif %}
+                                <label>AUDIO</label>
+                                <!-- Form field - RANK -->
+                                <input type="file" placeholder="AUDIO" class="form-control" name="audio" id="audio" accept="audio/mp3" required>
+            
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col">
+
+                                <!-- Submit button -->
+                                <button type="submit" class="btn btn-primary btn-block" id="submit">Save</button>
+
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

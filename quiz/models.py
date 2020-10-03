@@ -22,8 +22,8 @@ class Quiz(models.Model):
     def __str__(self):
         return self.title
 
-
 class Question(models.Model):
+    order_num = models.IntegerField()
     quiz = models.ForeignKey(Quiz,on_delete=models.CASCADE)
     question = models.TextField()
     answer = models.CharField(max_length=1,choices=([('a','a'),('b','b'),('c','c'),('d','d'),]))

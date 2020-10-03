@@ -40,7 +40,7 @@
 
         
 
-        <form method="POST" id="myform" action="">
+        <form method="POST" id="myform" action="" autocomplete="off">
         {% csrf_token %}
         {% for question in questions %}
         <div >

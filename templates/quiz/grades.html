@@ -4,6 +4,7 @@ grades
 {% endblock %}
 
 
+
 {% block content %}
 
 
@@ -51,7 +52,20 @@ grades
 </div>
 </div>
 
-
+<div class="container">
+          <form action="{% url 'export_data' %}" method="POST" style="text-align: center;">
+            {% csrf_token %}
+            <div class="form-group">
+              <input type="number" class="col-5" name="num_row" placeholder="CHOOSE THE NUMBER OF ROWS TO EXPORT">
+            </div>
+            <div class="form-group">
+              <button class="btn btn-success col-2" name="excel">EXPORT TO EXCEL</button>
+            </div>
+            
+          </form>
+</div>
+  
+</div>
 <table class="table">
     <thead class="thead-dark">
       <tr>
@@ -64,6 +78,8 @@ grades
         <th scope="col">Listening Score</th>
         <th scope="col">Reading Score</th>
         <th scope="col">Score</th>
+        <th scope="col">Quiz</th>
+        <th scope="col">Instructor</th>
         <th scope="col">Date</th>
       </tr>
     </thead>
@@ -79,6 +95,8 @@ grades
         <td>{{student.listening_score}}</td>
         <td>{{student.reading_score}}</td>
         <td>{{student.score}}</td>
+        <td>{{student.quiz}}</td>
+        <td>{{student.instructor}}</td>
         <td>{{student.date}}</td>
       </tr>
         {% endfor %}

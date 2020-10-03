@@ -39,11 +39,13 @@
           
           <nav class="nav-menu d-none d-lg-block">
             <ul>
+              <!---if home page don t show it-->
               {% if '/' != request.path %}
               <li {% if '/' == request.path %}class="active" {% endif %}><a href="{% url 'index' %}">Home</a></li>
               {% endif %}
               {% if request.user.is_authenticated %}
               <li {% if 'grades' in request.path %}class="active" {% endif %}><a href="{% url 'grades' %}">Grades</a></li>
+              <li {% if 'add_quiz' in request.path %}class="active" {% endif %}><a href="{% url 'add_quiz' %}">Add a Quiz</a></li>
               {% endif %}
               <li>
                 {% if request.user.is_authenticated %}

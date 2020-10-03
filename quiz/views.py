@@ -6,12 +6,56 @@ from django.shortcuts import redirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
+from django.http import HttpResponse
 from dateutil import parser
 from datetime import datetime
+import xlwt
 
-NUM_OF_POSTS = 10
+
+num_of_students = 20
 
 # Create your views here.
+
+
+def export_data(request):
+    # EXPORTING EXCEL SPREED SHEET
+
+    if request.POST.get('num_row') is not '':
+            num_slicer = int(request.POST.get('num_row'))
+    else:
+        num_slicer = num_of_students
+
+    myQuery = Student.objects.all().order_by('-date')[:num_slicer]
+
+    if 'excel' in request.POST:
+        response = HttpResponse(content_type='application/ms-excel')
+        response['Content-Disposition'] = 'attachement; filename = Results'+str(datetime.now())+'.xls'
+        wb = xlwt.Workbook(encoding='utf-8')
+        ws = wb.add_sheet('Results')
+        row_num = 0
+        font_style = xlwt.XFStyle()
+        font_style.font.bold = True
+        columns = ['rank','first_name','last_name','serial_number',
+                    'service','listening_score','reading_score','score',
+                    'quiz','instructor','date']
+
+        for col_num in range(len(columns)):
+            ws.write(row_num,col_num,columns[col_num],font_style)
+
+        font_style = xlwt.XFStyle()
+
+        rows = myQuery.values_list('rank','first_name','last_name','serial_number',
+                    'service','listening_score','reading_score','score',
+                    'quiz','instructor','date')
+                    
+        for row in rows:
+            row_num += 1
+
+            for col_num in range(len(row)):
+                ws.write(row_num,col_num,str(row[col_num]),font_style)
+
+        wb.save(response)
+        return response
 
 def index(request):
     return render(request,'quiz/index.html')
@@ -24,9 +68,7 @@ def start_quiz(request,test_name):
     #last index of the part I minus one
     index_target = 2
     middle_question_id = first_question_id + index_target
-    print('quiz started')
     if request.POST:
-        print(request.POST)
         readingScore = 0
         listeningScore = 0
         for elem in questions.values():
@@ -59,6 +101,7 @@ def start_quiz(request,test_name):
     return render(request,'quiz/start_quiz.html',dataQuiz)
 
 def end_quiz(request):
+    request.session.clear()
     return render(request,'quiz/end_quiz.html')
 
 def fill_info(request):
@@ -106,7 +149,7 @@ def grades(request):
                                             serial_number__icontains=serial_number,
                                             service__icontains=service).order_by('-date')
 
-    paginator = Paginator(students_ls, NUM_OF_POSTS)  # Show NUM_OF_PAGES posts per page
+    paginator = Paginator(students_ls, num_of_students)  # Show NUM_OF_PAGES posts per page
     page = request.GET.get('page')
 
     students = paginator.get_page(page)
@@ -115,3 +158,32 @@ def grades(request):
         'students':students
     }
     return render(request,'quiz/grades.html',context)
+
+@login_required(login_url='login')
+def add_quiz(request):
+    if request.POST:
+        q = Quiz(title=request.POST.get('title'),audio=request.POST.get('audio'))
+        q.save()
+    return render(request,'quiz/add_quiz.html')
+
+
+@login_required(login_url='login')
+def add_question_quiz(request,quiz_id):
+    quiz = Quiz.objects.filter(id=quiz_id)
+    if request.POST:
+        question = request.POST.get('question')
+        answer = request.POST.get('answer')
+        choice1 = request.POST.get('choice1')
+        choice2 = request.POST.get('choice2')
+        choice3 = request.POST.get('choice3')
+        choice4 = request.POST.get('choice4')
+        q = question(quiz=quiz,question=question, answer=answer, choice1=choice1, choice2=choice2, choice3=choice3, choice4=choice4)
+        q.save()
+    return render(request,'quiz/add_question_quiz.html')
+
+
+
+
+
+    
+    
