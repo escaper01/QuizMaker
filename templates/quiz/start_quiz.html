@@ -45,12 +45,12 @@
         {% for question in questions %}
         <div >
             <!-- LISTENING && READING parts-->
-            {% if forloop.counter == 1 %}
+            {% if question.order_num == 1 %}
             <h1> I - Listening Part </h1>
-            {% elif forloop.counter == 4 %}
+            {% elif question.order_num == 4 %}
             <h1> II - Reading Part </h1>
             {% endif %}
-            <h3 class="question-wrapper"> <span>{{ forloop.counter }} -</span> {{ question }}</h3>
+            <h3 class="question-wrapper"> <span>{{ question.order_num }} -</span> {{ question|safe }}</h3>
             <div class="answer-wrapper">
                 <ul class="list-group list-group-flush">
                     

@@ -23,17 +23,17 @@ class Quiz(models.Model):
         return self.title
 
 class Question(models.Model):
-    order_num = models.IntegerField()
+    order_num = models.IntegerField(null=True,blank=True)
     quiz = models.ForeignKey(Quiz,on_delete=models.CASCADE)
-    question = models.TextField()
-    answer = models.CharField(max_length=1,choices=([('a','a'),('b','b'),('c','c'),('d','d'),]))
-    choice1 = models.TextField()
-    choice2 = models.TextField()
-    choice3 = models.TextField()
-    choice4 = models.TextField()
+    question = models.TextField(null=True,blank=True)
+    answer = models.CharField(max_length=1,choices=([('a','a'),('b','b'),('c','c'),('d','d'),]),null=True,blank=True)
+    choice1 = models.TextField(null=True,blank=True)
+    choice2 = models.TextField(null=True,blank=True)
+    choice3 = models.TextField(null=True,blank=True)
+    choice4 = models.TextField(null=True,blank=True)
 
     def __str__(self):
-        return self.question
+        return '{0}'.format(self.question)
 
 class Student(models.Model):
     quiz = models.ForeignKey(Quiz,on_delete=models.CASCADE)

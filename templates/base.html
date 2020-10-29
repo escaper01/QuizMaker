@@ -46,6 +46,7 @@
               {% if request.user.is_authenticated %}
               <li {% if 'grades' in request.path %}class="active" {% endif %}><a href="{% url 'grades' %}">Grades</a></li>
               <li {% if 'add_quiz' in request.path %}class="active" {% endif %}><a href="{% url 'add_quiz' %}">Add a Quiz</a></li>
+              <li {% if 'all_quiz' in request.path %}class="active" {% endif %}><a href="{% url 'all_quiz' %}">All Quizzes</a></li>
               {% endif %}
               <li>
                 {% if request.user.is_authenticated %}

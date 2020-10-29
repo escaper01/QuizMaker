@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<table class="table container">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Quiz</th>
+      <th scope="col">Audio</th>
+      <th scope="col">Created</th>
+      <th scope="col">Edit</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for quiz in quizzes %}
+    <tr>
+      <th scope="row">{{forloop.counter}}</th>
+      <td>{{quiz.title}}</td>
+      <td>{{quiz.audio}}</td>
+      <td>{{quiz.created}}</td>
+      <td>
+             <a class="btn btn-info" href="{% url 'choose_question' quiz.id %}">Edit</a>
+      </td>
+    </tr>
+
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

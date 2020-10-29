@@ -20,12 +20,12 @@ num_of_students = 20
 def export_data(request):
     # EXPORTING EXCEL SPREED SHEET
 
-    if request.POST.get('num_row') is not '':
+    if request.POST.get('num_row') != '':
             num_slicer = int(request.POST.get('num_row'))
     else:
         num_slicer = num_of_students
 
-    myQuery = Student.objects.all().order_by('-date')[:num_slicer]
+    myQuery = Student.objects.all().order_by('-date').filter(id__in=request.session.get('current_ids_query'))[:num_slicer]
 
     if 'excel' in request.POST:
         response = HttpResponse(content_type='application/ms-excel')
@@ -149,6 +149,9 @@ def grades(request):
                                             serial_number__icontains=serial_number,
                                             service__icontains=service).order_by('-date')
 
+    #save all searched id in the current session for later use (exportation to excel file )                                      
+    request.session['current_ids_query'] = [st.pk for st in students_ls]
+
     paginator = Paginator(students_ls, num_of_students)  # Show NUM_OF_PAGES posts per page
     page = request.GET.get('page')
 
@@ -168,18 +171,52 @@ def add_quiz(request):
 
 
 @login_required(login_url='login')
-def add_question_quiz(request,quiz_id):
-    quiz = Quiz.objects.filter(id=quiz_id)
+def all_quiz(request):
+    quizzes = Quiz.objects.all().order_by('-created')
+    context = {
+        'quizzes':quizzes
+    }
+    return render(request,'quiz/all_quiz.html',context)
+
+@login_required(login_url='login')
+def choose_question(request,quiz_id):
+    quiz = Quiz.objects.filter(id=quiz_id).get()
+    question = Question.objects.filter(quiz=quiz).first()
     if request.POST:
+        print(request.POST)
+        try:
+            question = Question.objects.filter(quiz=quiz,order_num=request.POST.get('question')).get()
+        except Question.DoesNotExist:
+            q = Question(order_num=request.POST.get('question'),quiz=quiz,
+                        question='',answer='a',choice1='',
+                        choice2='',choice3='',choice4='')
+
+            q.save()
+            question = Question.objects.filter(quiz=quiz,order_num=request.POST.get('question')).get()
+
+    context = {
+        'range':range(1,101),
+        'question':question
+    }
+    return render(request,'quiz/choose_question.html',context)
+
+
+
+@login_required(login_url='login')
+def add_or_update_question(request,quiz_id,question_id):
+    quiz = Quiz.objects.filter(id=quiz_id).get()
+    if request.POST:
+        order_num = int(request.POST.get('order_num'))
         question = request.POST.get('question')
         answer = request.POST.get('answer')
         choice1 = request.POST.get('choice1')
         choice2 = request.POST.get('choice2')
         choice3 = request.POST.get('choice3')
         choice4 = request.POST.get('choice4')
-        q = question(quiz=quiz,question=question, answer=answer, choice1=choice1, choice2=choice2, choice3=choice3, choice4=choice4)
-        q.save()
-    return render(request,'quiz/add_question_quiz.html')
+        #q = Question(quiz=quiz,order_num=order_num,question=question, answer=answer, choice1=choice1,choice2=choice2, choice3=choice3, choice4=choice4)
+        #q.save()
+        Question.objects.filter(quiz=quiz,id=question_id).update(order_num=order_num,question=question, answer=answer, choice1=choice1,choice2=choice2, choice3=choice3, choice4=choice4)
+    return redirect('choose_question',quiz_id=quiz_id)
 
 
 
