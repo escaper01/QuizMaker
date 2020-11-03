@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from quiz.models import *
-from django.views import generic
-from django.views.generic import CreateView, UpdateView, DeleteView
+#from django.views import generic
+#from django.views.generic import CreateView, UpdateView, DeleteView
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
@@ -10,7 +10,7 @@ from django.http import HttpResponse
 from dateutil import parser
 from datetime import datetime
 import xlwt
-
+from django.core.files.storage import FileSystemStorage
 
 num_of_students = 20
 
@@ -165,8 +165,22 @@ def grades(request):
 @login_required(login_url='login')
 def add_quiz(request):
     if request.POST:
-        q = Quiz(title=request.POST.get('title'),audio=request.POST.get('audio'))
+        audioFile = request.FILES['audio']
+        fs = FileSystemStorage()
+        filename = fs.save(audioFile.name, audioFile)
+
+        q = Quiz(title=request.POST.get('title'),audio=filename)
         q.save()
+
+        _quiz = Quiz.objects.order_by('-created').first()
+
+        y = Question(order_num=1, quiz=_quiz,question=' ',choice1='',
+                    choice2='',choice3='',choice4='')
+        y.save()
+
+        _question = Question.objects.first()
+        return redirect(reverse('add_or_update_question',args=[_quiz.id,_question.id]))
+
     return render(request,'quiz/add_quiz.html')
 
 
@@ -183,13 +197,12 @@ def choose_question(request,quiz_id):
     quiz = Quiz.objects.filter(id=quiz_id).get()
     question = Question.objects.filter(quiz=quiz).first()
     if request.POST:
-        print(request.POST)
         try:
             question = Question.objects.filter(quiz=quiz,order_num=request.POST.get('question')).get()
         except Question.DoesNotExist:
             q = Question(order_num=request.POST.get('question'),quiz=quiz,
-                        question='',answer='a',choice1='',
-                        choice2='',choice3='',choice4='')
+                        question=' ',answer='a',choice1=' ',
+                        choice2=' ',choice3=' ',choice4=' ')
 
             q.save()
             question = Question.objects.filter(quiz=quiz,order_num=request.POST.get('question')).get()
@@ -213,14 +226,8 @@ def add_or_update_question(request,quiz_id,question_id):
         choice2 = request.POST.get('choice2')
         choice3 = request.POST.get('choice3')
         choice4 = request.POST.get('choice4')
-        #q = Question(quiz=quiz,order_num=order_num,question=question, answer=answer, choice1=choice1,choice2=choice2, choice3=choice3, choice4=choice4)
-        #q.save()
         Question.objects.filter(quiz=quiz,id=question_id).update(order_num=order_num,question=question, answer=answer, choice1=choice1,choice2=choice2, choice3=choice3, choice4=choice4)
     return redirect('choose_question',quiz_id=quiz_id)
 
-
-
-
-
-    
-    
+def handler404(request, exception):
+    return render(request, '404.html', status=404)

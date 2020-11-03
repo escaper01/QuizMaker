@@ -13,3 +13,8 @@ urlpatterns = [
     path('add_question_quiz/<int:quiz_id>/<int:question_id>',views.add_or_update_question, name='add_or_update_question'),
     path('export',views.export_data, name='export_data'),
 ]
+
+
+
+
+handler404 = 'quiz.views.handler404'

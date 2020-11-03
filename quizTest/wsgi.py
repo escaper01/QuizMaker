@@ -10,7 +10,7 @@ https://docs.djangoproject.com/en/3.1/howto/deployment/wsgi/
 import os,sys
 
 # Add the app's directory to the PYTHONPATH
-#sys.path.append('C:\Users\osama\Desktop\ex\quiz\quizTest')
+#sys.path.append('C:/Users/osama/Desktop/ex/quiz/quizTest')
 
 from django.core.wsgi import get_wsgi_application
 
