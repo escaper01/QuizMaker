@@ -23,10 +23,13 @@ class Quiz(models.Model):
         return self.title
 
 class Question(models.Model):
+    POSSIBLE_ANSWERS = [('a','a'),('b','b'),('c','c'),('d','d'),]
+    QUESTION_TYPE = [('listening','listening'),('reading','reading'),]
     order_num = models.IntegerField(null=True,blank=True)
     quiz = models.ForeignKey(Quiz,on_delete=models.CASCADE)
     question = models.TextField(null=True,blank=True)
-    answer = models.CharField(max_length=1,choices=([('a','a'),('b','b'),('c','c'),('d','d'),]),null=True,blank=True)
+    type = models.TextField(max_length=20,choices=QUESTION_TYPE,null=True,blank=True)
+    answer = models.CharField(max_length=1,choices=(POSSIBLE_ANSWERS),null=True,blank=True)
     choice1 = models.TextField(null=True,blank=True)
     choice2 = models.TextField(null=True,blank=True)
     choice3 = models.TextField(null=True,blank=True)

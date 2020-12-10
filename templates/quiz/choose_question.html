@@ -2,9 +2,11 @@
 
 {% block content %}
 
-<div class="container py-3">
+<div class="container py-2">
+
     <div class="row">
-        <div class="mx-auto col-sm-6">
+
+        <div class="mx-auto col-sm-7" id='question-navigator'>
             <h1>
                 <span style="width: 100%;" class="badge badge-info">{{question.quiz.title}}</span>
             </h1>
@@ -34,14 +36,35 @@
                         </div>
                     </div>
                 </form>
+        </div>
 
+        <div class="mx-auto col-sm-6" id='question-form'>
             <div class="card">
-
-                  
-
                 <div class="card-body">
                     <form action="{% url 'add_or_update_question' question.quiz.id question.id %}" method="POST" autocomplete="off">
                         {% csrf_token %}
+
+                        <div class="form-group">
+                            <div class="col">
+            
+
+                               <label>Question Type:</label>
+                                <br/>
+                                <!-- Form field - Question Type -->
+                                <!-- Group of default radios - listening -->
+                                <div class="custom-control custom-control-inline custom-radio">
+                                    <input type="radio" class="custom-control-input" id="listening" value="listening" name="type" {% if question.type == 'listening' or question.type == None %} checked {% endif %}>
+                                    <label class="custom-control-label" for="listening">Listening</label>
+                                </div>
+                                
+                                <!-- Group of default radios - reading -->
+                                <div class="custom-control custom-control-inline custom-radio">
+                                    <input type="radio" class="custom-control-input" id="reading" value="reading" name="type" {% if question.type == 'reading' %} checked {% endif %}>
+                                    <label class="custom-control-label" for="reading">Reading</label>
+                                </div>
+                                  
+                            </div>
+                        </div>
 
                         <div class="form-group">
                             <div class="col">
@@ -64,7 +87,7 @@
                                 <label class="alert alert-danger">{{ form.quiz.errors }}</label> {% endif %}
                                 <label>Question</label>
                                 <!-- Form field - RANK -->
-                                <input type="text" placeholder="Question" class="form-control" name="question" id="question" value="{{question.question}}" required>
+                                <textarea type="text" placeholder="Question" class="form-control" name="question" id="question" rows=4 required>{{question.question}}</textarea>
             
                             </div>
                         </div>
@@ -157,7 +180,70 @@
                 </div>
             </div>
         </div>
+
+        <div class="mx-auto col-sm-6" id="question-preview">
+            <div style="margin-top: 35%;">
+                <span>
+                    {% if question.order_num == ' ' %}
+                    You didn't specify the Order Number!!!
+                    {% else %}
+                    Order Number : {{question.order_num}}
+                    {% endif %}
+                </span>
+
+                <h2>Question:</h2>
+                
+                <h3>
+                    {% if question.question == ' ' %}
+                    You didn't specify the question yet !!!
+                    {% else %}
+                    {{question.question}}
+                    {% endif %}
+                </h3>
+                <h3>
+                    {% if question.answer == ' ' %}
+                    You didn't specify an answer yet !!!
+                    {% else %}
+                    <strong>Answer : </strong>
+                    <span style="text-transform: uppercase;">
+                        {{question.answer}}
+                    </span>
+                    {% endif %}
+                </h3>
+                <h3>
+                    {% if question.choice1 == ' ' %}
+                    You didn't specify choice A yet !!!
+                    {% else %}
+                    <strong>A - </strong>{{question.choice1}}
+                    {% endif %}
+                </h3>
+                <h3>
+                    {% if question.choice2 == ' ' %}
+                    You didn't specify choice B yet !!!
+                    {% else %}
+                    <strong>B - </strong>{{question.choice2}}
+                    {% endif %}
+                </h3>
+                <h3>
+                    {% if question.choice3 == ' ' %}
+                    You didn't specify choice C yet !!!
+                    {% else %}
+                    <strong>C - </strong>{{question.choice3}}
+                    {% endif %}
+                </h3>
+                <h3>
+                    {% if question.choice4 == ' ' %}
+                    You didn't specify choice D yet !!!
+                    {% else %}
+                    <strong>D - </strong>{{question.choice4}}
+                    {% endif %}
+                </h3>
+            </div>
+            
+        </div>
+
     </div>
+
 </div>
 
 {% endblock %}

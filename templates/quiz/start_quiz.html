@@ -31,13 +31,14 @@
 </div>
 
 <div style="margin-right:160px;margin-left:160px;">
-        <h4> TEST ID: 
-        {{ quiz.title }}
+        <h4 style="text-align: right;padding: 20px;"> TEST ID: 
+                <strong>
+                        {{ quiz.title }}
+                </strong>
         </h4>
         <audio controls autoplay style="display: none;">
                 <source src="{{quiz.audio.url}}" type="audio/ogg" >
         </audio>
-
         
 
         <form method="POST" id="myform" action="" autocomplete="off">
@@ -55,19 +56,19 @@
                 <ul class="list-group list-group-flush">
                     
                         <li class="list-group-item">
-                                <input type="radio" id="choice1" name="{{question.pk}}" value="a">
+                                <input type="radio" id="choice1" name="{{question.pk}}" value="a {{question.type}}">
                                 <span>{{question.choice1}}<span> 
                         </li>
                         <li class="list-group-item">            
-                                <input type="radio" id="choice2" name="{{question.pk}}" value="b">
+                                <input type="radio" id="choice2" name="{{question.pk}}" value="b {{question.type}}">
                                 <span>{{question.choice2}}<span> 
                         </li>
                         <li class="list-group-item">
-                                <input type="radio" id="choice3" name="{{question.pk}}" value="c">
+                                <input type="radio" id="choice3" name="{{question.pk}}" value="c {{question.type}}">
                                 <span>{{question.choice3}}<span> 
                         </li>
                         <li class="list-group-item">
-                                <input type="radio" id="choice4" name="{{question.pk}}" value="d">
+                                <input type="radio" id="choice4" name="{{question.pk}}" value="d {{question.type}}">
                                 <span>{{question.choice4}}
                         </li>
                         

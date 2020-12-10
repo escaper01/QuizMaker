@@ -65,34 +65,34 @@ def start_quiz(request,test_name):
     questions = Question.objects.filter(quiz=quiz).all()
     questions_len = questions.count()
     first_question_id = questions.first().id
-    #last index of the part I minus one
-    index_target = 2
-    middle_question_id = first_question_id + index_target
-    if request.POST:
+    print('yalh bditi')
+    
+    if request.POST:       
         readingScore = 0
         listeningScore = 0
         for elem in questions.values():
             question_id = elem['id']
             right_answer = elem['answer']
-            chosen_answer = request.POST.get(str(question_id))
-            
-            if chosen_answer == right_answer and question_id <= middle_question_id:
-                listeningScore += 1
+            received_value = request.POST.get(str(question_id))
+            #received a string contains the chosen answer and the type of that question
+            received_value_list = received_value.split(' ')
+            question_type = received_value_list[1]
+            chosen_answer = received_value_list[0]
 
-            elif chosen_answer == right_answer and question_id > middle_question_id:
-                readingScore += 1
-
+            if chosen_answer == right_answer:
+                if question_type == 'listening':
+                    listeningScore += 1
+                elif question_type == 'reading':
+                    readingScore += 1
+                
         s = Student(quiz =quiz,first_name=request.session.get('first_name'),
                     last_name=request.session.get('last_name'),serial_number=request.session.get('serial_number'),
                     instructor=request.session.get('instructor'),service=request.session.get('service'),
                     rank=request.session.get('rank'),listening_score = listeningScore,
                     reading_score=readingScore, score=readingScore+listeningScore)
         s.save()
-        print('go to endquiz')
+        
         return redirect('end_quiz')
-                
-    print('quiz not posted')
-
     
     dataQuiz = {
         'quiz':quiz,
@@ -220,13 +220,16 @@ def add_or_update_question(request,quiz_id,question_id):
     quiz = Quiz.objects.filter(id=quiz_id).get()
     if request.POST:
         order_num = int(request.POST.get('order_num'))
+        type = request.POST.get('type')
+        print(request.POST.get('type'))
+        print('this wad the type of quest')
         question = request.POST.get('question')
         answer = request.POST.get('answer')
         choice1 = request.POST.get('choice1')
         choice2 = request.POST.get('choice2')
         choice3 = request.POST.get('choice3')
         choice4 = request.POST.get('choice4')
-        Question.objects.filter(quiz=quiz,id=question_id).update(order_num=order_num,question=question, answer=answer, choice1=choice1,choice2=choice2, choice3=choice3, choice4=choice4)
+        Question.objects.filter(quiz=quiz,id=question_id).update(order_num=order_num,type=type,question=question, answer=answer, choice1=choice1,choice2=choice2, choice3=choice3, choice4=choice4)
     return redirect('choose_question',quiz_id=quiz_id)
 
 def handler404(request, exception):
