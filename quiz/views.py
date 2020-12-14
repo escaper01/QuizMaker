@@ -65,7 +65,6 @@ def start_quiz(request,test_name):
     questions = Question.objects.filter(quiz=quiz).all()
     questions_len = questions.count()
     first_question_id = questions.first().id
-    print('yalh bditi')
     
     if request.POST:       
         readingScore = 0
@@ -195,8 +194,11 @@ def all_quiz(request):
 @login_required(login_url='login')
 def choose_question(request,quiz_id):
     quiz = Quiz.objects.filter(id=quiz_id).get()
-    question = Question.objects.filter(quiz=quiz).first()
+
+    all_questions = Question.objects.filter(quiz=quiz)
+    question = all_questions.first()
     if request.POST:
+        print(request.POST)
         try:
             question = Question.objects.filter(quiz=quiz,order_num=request.POST.get('question')).get()
         except Question.DoesNotExist:
@@ -207,9 +209,22 @@ def choose_question(request,quiz_id):
             q.save()
             question = Question.objects.filter(quiz=quiz,order_num=request.POST.get('question')).get()
 
+
+
+    #PROGRESS BAR LOGIC
+    questions_done = all_questions.count()
+    question_total = 100 if 'alcpt' in quiz.title.lower() else 50
+    all_num_orders_done = [x.order_num for x in all_questions]
+    progress = int(questions_done/question_total * 100)
+
+
+
+
     context = {
-        'range':range(1,101),
-        'question':question
+        'range':range(1,question_total+1),
+        'question':question,
+        'progress':progress,
+        'all_num_orders_done':all_num_orders_done
     }
     return render(request,'quiz/choose_question.html',context)
 
@@ -221,8 +236,6 @@ def add_or_update_question(request,quiz_id,question_id):
     if request.POST:
         order_num = int(request.POST.get('order_num'))
         type = request.POST.get('type')
-        print(request.POST.get('type'))
-        print('this wad the type of quest')
         question = request.POST.get('question')
         answer = request.POST.get('answer')
         choice1 = request.POST.get('choice1')

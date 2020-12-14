@@ -40,7 +40,6 @@
                 <source src="{{quiz.audio.url}}" type="audio/ogg" >
         </audio>
         
-
         <form method="POST" id="myform" action="" autocomplete="off">
         {% csrf_token %}
         {% for question in questions %}
@@ -71,7 +70,6 @@
                                 <input type="radio" id="choice4" name="{{question.pk}}" value="d {{question.type}}">
                                 <span>{{question.choice4}}
                         </li>
-                        
                 </ul>
             </div>
         </div>
@@ -79,10 +77,8 @@
         {% endfor %}
         <div class="form-group">
                         <div class="col">
-        
                             <!-- Submit button -->
                             <button type="submit" class="btn btn-primary btn-block" id="submit">Save</button>
-        
                         </div>
                     </div>
         <form>
