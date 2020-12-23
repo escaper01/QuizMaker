@@ -4,15 +4,17 @@
 
  <!-- ======= Hero Section ======= -->
 <section id="hero">
+  {% with quote=proverbs|random %}
     <div class="hero-container" data-aos="fade-up" data-aos-delay="150">
-      <h1>Succes doesn't come to you,<br/> you go to it.</h1>
-      <h2 style="text-align: right;">-Marva Collins</h2>
+      <h1 style="text-transform:none;width:60%">{{ quote.0 }}</h1>
+      <h2 style="text-align: right;">{{ quote.1 }}</h2>
       <div class="d-flex">
         <a href="{% url 'fill_info' %}" class="btn-get-started" style="background-color:#1982c4;border: 2px solid #1982c4">I'm a student</a>
         <span style="width:20px;"></span>
         <a href="{% url 'login' %}" class="btn-get-started" style="background-color:#ff595e;border: 2px solid #ff595e">I'm a teacher</a>
       </div>
     </div>
+    {% endwith %}
   </section><!-- End Hero -->
 
 {% endblock %}

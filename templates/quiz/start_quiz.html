@@ -33,7 +33,7 @@
 <div style="margin-right:160px;margin-left:160px;">
         <h4 style="text-align: right;padding: 20px;"> TEST ID: 
                 <strong>
-                        {{ quiz.title }}
+                        {{  quiz.title }}
                 </strong>
         </h4>
         <audio controls autoplay style="display: none;">
@@ -41,13 +41,13 @@
         </audio>
         
         <form method="POST" id="myform" action="" autocomplete="off">
+        <h1> I - Listening Part </h1>
         {% csrf_token %}
         {% for question in questions %}
         <div >
-            <!-- LISTENING && READING parts-->
-            {% if question.order_num == 1 %}
-            <h1> I - Listening Part </h1>
-            {% elif question.order_num == 4 %}
+            <!-- all questions -->
+            
+            {% if question.order_num == reading_order_num %}
             <h1> II - Reading Part </h1>
             {% endif %}
             <h3 class="question-wrapper"> <span>{{ question.order_num }} -</span> {{ question|safe }}</h3>
