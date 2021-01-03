@@ -6,7 +6,7 @@
 <section id="hero">
   {% with quote=proverbs|random %}
     <div class="hero-container" data-aos="fade-up" data-aos-delay="150">
-      <h1 style="text-transform:none;width:60%">{{ quote.0 }}</h1>
+      <h1 style="text-transform:none;width:60%">{{ quote.0|safe }}</h1>
       <h2 style="text-align: right;">{{ quote.1 }}</h2>
       <div class="d-flex">
         <a href="{% url 'fill_info' %}" class="btn-get-started" style="background-color:#1982c4;border: 2px solid #1982c4">I'm a student</a>

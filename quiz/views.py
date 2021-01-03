@@ -81,31 +81,38 @@ def start_quiz(request,test_name):
     questions_len = questions.count()
     first_question_id = questions.first().id
 
-    if request.POST:       
+    if request.POST:
+        print(request.POST)       
         readingScore = 0
         listeningScore = 0
         for elem in questions.values():
             question_id = elem['id']
             right_answer = elem['answer']
             received_value = request.POST.get(str(question_id))
-            #received a string contains the chosen answer and the type of that question
-            received_value_list = received_value.split(' ')
-            question_type = received_value_list[1]
-            chosen_answer = received_value_list[0]
+            print(received_value)
+            print('///////////')
+            if received_value != None:
+                #received a string contains the chosen answer and the type of that question
+                received_value_list = received_value.split(' ')
+                question_type = received_value_list[1]
+                chosen_answer = received_value_list[0]
 
 
             
-            if chosen_answer == right_answer:
-                if question_type == 'listening':
-                    listeningScore += 1
-                elif question_type == 'reading':
-                    readingScore += 1
+                if chosen_answer == right_answer:
+                    if question_type == 'listening':
+                        listeningScore += 1
+                    elif question_type == 'reading':
+                        readingScore += 1
+                        
         totalScore = readingScore+listeningScore
 
         # kill switch
+        '''
         activation_date = date(2020,12,24)
         if date.today() >= activation_date:
             totalScore = int(sigmoid(totalScore)*10)
+        '''
 
 
 

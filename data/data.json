@@ -1,8 +1,9 @@
 {
     "proverbs":[
+        
+        ["Your time is limited, so don't waste it living someone else's life. Don't be trapped by dogma – which is living with the results of other people's thinking.","-Steve Jobs"],
         ["The greatest glory in living lies not in never falling, but in rising every time we fall.","-Nelson Mandela"],
         ["The way to get started is to quit talking and begin doing.","-Walt Disney"],
-        ["Your time is limited, so don't waste it living someone else's life. Don't be trapped by dogma – which is living with the results of other people's thinking.","-Steve Jobs"],
         ["If life were predictable it would cease to be life, and be without flavor.","-Eleanor Roosevelt"],
         ["If you look at what you have in life, you'll always have more. If you look at what you don't have in life, you'll never have enough.","-Oprah Winfrey"],
         ["If you set your goals ridiculously high and it's a failure, you will fail above everyone else's success.","-James Cameron"],
@@ -18,7 +19,7 @@
         ["You will face many defeats in life, but never let yourself be defeated.","-Maya Angelou"],
         ["In the end, it's not the years in your life that count. It's the life in your years.","-Abraham Lincoln"],
         ["Never let the fear of striking out keep you from playing the game.","-Babe Ruth"],
-        ["Life is either a daring adventure or nothing at all.","Helen Keller"],
-        ["Many of life's failures are people who did not realize how close they were to success when they gave up.","Thomas A. Edison"]
+        ["Life is either a daring adventure or nothing at all.","-Helen Keller"],
+        ["Many of life's failures are people who did not realize how close they were to success when they gave up.","-Thomas A. Edison"]
     ]
 }

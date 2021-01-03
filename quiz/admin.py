@@ -4,6 +4,7 @@ from quiz.models import *
 # Register your models here.
 class QuestionAdmin(admin.ModelAdmin):
     list_display = ('id','order_num','quiz','question','type','choice1','choice2','choice3','choice4','answer')
+    list_editable = ('type','answer')
 
 class QuestionInline(admin.StackedInline):
     model = Question
