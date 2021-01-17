@@ -37,7 +37,7 @@
           <!-- Uncomment below if you prefer to use an image logo -->
           <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
           
-          <nav class="nav-menu d-none d-lg-block">
+          <nav class="nav-menu d-none d-sm-block">
             <ul>
               <!---if home page don t show it-->
               {% if '/' != request.path %}
@@ -73,13 +73,14 @@
       <div style="margin-bottom:90px;"></div>
       {% endif %}
 
-
+      <div id="page-container">
       {% block content %} 
       
       
       {% endblock %}
-    
+      </div>
       <!-- ======= Footer ======= -->
+      {% if 'grades' not in request.path and 'start_quiz' not in request.path %}
       <footer id="footer">
         <div class="container">
           <div class="copyright">
@@ -89,6 +90,8 @@
             Developed by <strong>SGT EL ASSAOUI</strong>
           </div>
         </div>
+
+      {% endif %}
       </footer><!-- End Footer -->
     <!--
         <a href="#" class="back-to-top">
