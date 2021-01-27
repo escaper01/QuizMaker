@@ -1,15 +1,12 @@
-
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
-@font-face{
+@font-face {
   font-family: "Open Sans";
-  src: url('fonts/OpenSans-Regular.ttf');
+  src: url("fonts/OpenSans-Regular.ttf");
 }
 
 body {
-  
-  
   color: #444444;
 }
 
@@ -22,7 +19,12 @@ a:hover {
   text-decoration: none;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: "Raleway", sans-serif;
 }
 
@@ -119,7 +121,8 @@ h1, h2, h3, h4, h5, h6 {
   padding: 20px 0;
 }
 
-#header.header-scrolled, #header.header-inner-pages {
+#header.header-scrolled,
+#header.header-inner-pages {
   background: rgba(21, 34, 43, 0.85);
   padding: 12px 0;
 }
@@ -192,12 +195,16 @@ h1, h2, h3, h4, h5, h6 {
   transition: all 0.3s ease-in-out 0s;
 }
 
-.nav-menu a:hover:before, .nav-menu li:hover > a:before, .nav-menu .active > a:before {
+.nav-menu a:hover:before,
+.nav-menu li:hover > a:before,
+.nav-menu .active > a:before {
   visibility: visible;
   width: 100%;
 }
 
-.nav-menu a:hover, .nav-menu .active > a, .nav-menu li:hover > a {
+.nav-menu a:hover,
+.nav-menu .active > a,
+.nav-menu li:hover > a {
   color: #fff;
 }
 
@@ -234,7 +241,9 @@ h1, h2, h3, h4, h5, h6 {
   color: #15222b;
 }
 
-.nav-menu .drop-down ul a:hover, .nav-menu .drop-down ul .active > a, .nav-menu .drop-down ul li:hover > a {
+.nav-menu .drop-down ul a:hover,
+.nav-menu .drop-down ul .active > a,
+.nav-menu .drop-down ul li:hover > a {
   color: #ff4a17;
 }
 
@@ -355,7 +364,9 @@ h1, h2, h3, h4, h5, h6 {
   outline: none;
 }
 
-.mobile-nav a:hover, .mobile-nav .active > a, .mobile-nav li:hover > a {
+.mobile-nav a:hover,
+.mobile-nav .active > a,
+.mobile-nav li:hover > a {
   color: #ff4a17;
   text-decoration: none;
 }
@@ -732,7 +743,7 @@ section {
   min-height: 90vh;
 }
 
-.question-wrapper{
+.question-wrapper {
   border-top: 15px solid #788bff;
   border-left: 15px solid #788bff;
   border-right: 15px solid #ef476f;
@@ -740,7 +751,7 @@ section {
   padding: 25px;
 }
 
-.answer-wrapper{
+.answer-wrapper {
   border-bottom: 15px solid #ef476f;
   border-left: 15px solid #788bff;
   border-right: 15px solid #ef476f;
@@ -748,10 +759,10 @@ section {
   padding: 25px;
 }
 
-#end_quiz_img{
+#end_quiz_img {
   background: url("../img/end_quiz.gif");
   width: 100%;
-  height: 700px;
+  height: 500px;
   background-repeat: no-repeat;
   background-position: center;
 }

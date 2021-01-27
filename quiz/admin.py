@@ -21,9 +21,12 @@ class quizAdmin(admin.ModelAdmin):
     search_fields = ('title', )
 
 
+class StudentAdmin(admin.ModelAdmin):
+    list_display = ('first_name','last_name','serial_number','instructor','service','rank','listening_score','reading_score','score','date',)
+
 admin.site.register(Quiz,quizAdmin)
 admin.site.register(Question,QuestionAdmin)
-admin.site.register(Student)
+admin.site.register(Student,StudentAdmin)
 admin.site.register(Teacher)
 
 

@@ -3,6 +3,8 @@ from datetime import datetime
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from time import time
+from django.db.models.functions import Now
 # Create your models here.
 
 class Teacher(models.Model):
@@ -49,7 +51,7 @@ class Student(models.Model):
     listening_score = models.IntegerField(blank=True,null=True,default=0)
     reading_score = models.IntegerField(blank=True,null=True,default=0)
     score = models.IntegerField(blank=True,null=True,default=0)
-    date = models.DateTimeField(auto_now_add=True)
+    date = models.DateTimeField(auto_now=True,editable=True)
 
     def __str__(self):
         return f'{self.first_name} - {self.last_name} passed {self.quiz} and got {self.score}'
