@@ -1,123 +1,163 @@
-{% extends 'base.html' %}
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 
 <div class="container py-3">
-    <div class="row">
-        <div class="mx-auto col-sm-6">
-            <div class="card">      
-                <div class="card-body">
-                    <form action="" method="POST" autocomplete="off">
-                        {% csrf_token %}
+  <div class="row">
+    <div class="mx-auto col-sm-6">
+      <div class="card">
+        <div class="card-body">
+          <form action="" method="POST" autocomplete="off">
+            {% csrf_token %}
 
-                        <div class="form-group">
-                            <div class="col">
-            
-                                <!-- Errors - order_num -->
-                                {% if form.quiz.errors %}
-                                <label class="alert alert-danger">{{ form.quiz.errors }}</label> {% endif %}
-                                <label>ORDER NUMBER</label>
-                                <!-- Form field - order_num -->
-                                <input type="text" placeholder="ORDER NUMBER" class="form-control" name="order_num" id="order_num" required>
-            
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col">
-            
-                                <!-- Errors - Question -->
-                                {% if form.quiz.errors %}
-                                <label class="alert alert-danger">{{ form.quiz.errors }}</label> {% endif %}
-                                <label>Question</label>
-                                <!-- Form field - RANK -->
-                                <input type="text" placeholder="Question" class="form-control" name="question" id="question" required>
-            
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col">
-            
-                                <!-- Errors - RANK -->
-                                {% if form.quiz.errors %}
-                                <label class="alert alert-danger">{{ form.quiz.errors }}</label> {% endif %}
-                                <label>Answer</label>
-                                <!-- Form field - RANK -->
-                                <input type="text" placeholder="Answer" class="form-control" name="answer" id="answer" required>
-            
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col">
-            
-                                <!-- Errors - RANK -->
-                                {% if form.quiz.errors %}
-                                <label class="alert alert-danger">{{ form.quiz.errors }}</label> {% endif %}
-                                <label>Choice1</label>
-                                <!-- Form field - RANK -->
-                                <input type="text" placeholder="Choice1" class="form-control" name="choice1" id="choice1" required>
-            
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col">
-            
-                                <!-- Errors - RANK -->
-                                {% if form.quiz.errors %}
-                                <label class="alert alert-danger">{{ form.quiz.errors }}</label> {% endif %}
-                                <label>Choice2</label>
-                                <!-- Form field - RANK -->
-                                <input type="text" placeholder="Choice2" class="form-control" name="choice2" id="choice2" required>
-            
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col">
-            
-                                <!-- Errors - RANK -->
-                                {% if form.quiz.errors %}
-                                <label class="alert alert-danger">{{ form.quiz.errors }}</label> {% endif %}
-                                <label>Choice3</label>
-                                <!-- Form field - RANK -->
-                                <input type="text" placeholder="Choice3" class="form-control" name="choice3" id="choice3" required>
-            
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col">
-            
-                                <!-- Errors - RANK -->
-                                {% if form.quiz.errors %}
-                                <label class="alert alert-danger">{{ form.quiz.errors }}</label> {% endif %}
-                                <label>Choice4</label>
-                                <!-- Form field - RANK -->
-                                <input type="text" placeholder="Choice4" class="form-control" name="choice4" id="choice4" required>
-            
-                            </div>
-                        </div>
-
-
-                        
-
-                        <div class="form-group">
-                            <div class="col">
-
-                                <!-- Submit button -->
-                                <button type="submit" class="btn btn-primary btn-block" id="submit">Save</button>
-
-                            </div>
-                        </div>
-
-                    </form>
-                </div>
+            <div class="form-group">
+              <div class="col">
+                <!-- Errors - order_num -->
+                {% if form.quiz.errors %}
+                <label class="alert alert-danger">{{ form.quiz.errors }}</label>
+                {% endif %}
+                <label>ORDER NUMBER</label>
+                <!-- Form field - order_num -->
+                <input
+                  type="text"
+                  placeholder="ORDER NUMBER"
+                  class="form-control"
+                  name="order_num"
+                  id="order_num"
+                  required
+                />
+              </div>
             </div>
-        </div>
-    </div>
-</div>
 
+            <div class="form-group">
+              <div class="col">
+                <!-- Errors - Question -->
+                {% if form.quiz.errors %}
+                <label class="alert alert-danger">{{ form.quiz.errors }}</label>
+                {% endif %}
+                <label>Question</label>
+                <!-- Form field -->
+                <input
+                  type="text"
+                  placeholder="Question"
+                  class="form-control"
+                  name="question"
+                  id="question"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col">
+                <!-- Errors -->
+                {% if form.quiz.errors %}
+                <label class="alert alert-danger">{{ form.quiz.errors }}</label>
+                {% endif %}
+                <label>Answer</label>
+                <!-- Form field -->
+                <input
+                  type="text"
+                  placeholder="Answer"
+                  class="form-control"
+                  name="answer"
+                  id="answer"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col">
+                <!-- Errors -->
+                {% if form.quiz.errors %}
+                <label class="alert alert-danger">{{ form.quiz.errors }}</label>
+                {% endif %}
+                <label>Choice1</label>
+                <!-- Form field -->
+                <input
+                  type="text"
+                  placeholder="Choice1"
+                  class="form-control"
+                  name="choice1"
+                  id="choice1"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col">
+                <!-- Errors -->
+                {% if form.quiz.errors %}
+                <label class="alert alert-danger">{{ form.quiz.errors }}</label>
+                {% endif %}
+                <label>Choice2</label>
+                <!-- Form field -->
+                <input
+                  type="text"
+                  placeholder="Choice2"
+                  class="form-control"
+                  name="choice2"
+                  id="choice2"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col">
+                <!-- Errors -->
+                {% if form.quiz.errors %}
+                <label class="alert alert-danger">{{ form.quiz.errors }}</label>
+                {% endif %}
+                <label>Choice3</label>
+                <!-- Form field -->
+                <input
+                  type="text"
+                  placeholder="Choice3"
+                  class="form-control"
+                  name="choice3"
+                  id="choice3"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col">
+                <!-- Errors -->
+                {% if form.quiz.errors %}
+                <label class="alert alert-danger">{{ form.quiz.errors }}</label>
+                {% endif %}
+                <label>Choice4</label>
+                <!-- Form field -->
+                <input
+                  type="text"
+                  placeholder="Choice4"
+                  class="form-control"
+                  name="choice4"
+                  id="choice4"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col">
+                <!-- Submit button -->
+                <button
+                  type="submit"
+                  class="btn btn-primary btn-block"
+                  id="submit"
+                >
+                  Save
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 {% endblock %}

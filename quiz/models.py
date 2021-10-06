@@ -9,9 +9,8 @@ from django.db.models.functions import Now
 
 class Teacher(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    rank = models.CharField(max_length=50)
     def teacher_id(self):
-        return f'{self.rank} {self.user.last_name}'
+        return f'{self.user.last_name}'
 
     def __str__(self):
         return f'{self.user.first_name} {self.user.last_name}'
@@ -46,8 +45,7 @@ class Student(models.Model):
     last_name = models.CharField(max_length=50)
     serial_number = models.CharField(max_length=50,null=True, blank=True)
     instructor = models.CharField(max_length=50,null=True, blank=True)
-    service = models.CharField(max_length=50,null=True, blank=True)
-    rank = models.CharField(max_length=50,null=True, blank=True)
+    my_class = models.CharField(max_length=50,null=True, blank=True)
     listening_score = models.IntegerField(blank=True,null=True,default=0)
     reading_score = models.IntegerField(blank=True,null=True,default=0)
     score = models.IntegerField(blank=True,null=True,default=0)

@@ -41,8 +41,8 @@ def export_data(request):
         row_num = 0
         font_style = xlwt.XFStyle()
         font_style.font.bold = True
-        columns = ['rank','first_name','last_name','serial_number',
-                    'service','listening_score','reading_score','score',
+        columns = ['first_name','last_name','serial_number',
+                    'my_class','listening_score','reading_score','score',
                     'quiz','instructor','date']
 
         for col_num in range(len(columns)):
@@ -50,8 +50,8 @@ def export_data(request):
 
         font_style = xlwt.XFStyle()
 
-        rows = myQuery.values_list('rank','first_name','last_name','serial_number',
-                    'service','listening_score','reading_score','score',
+        rows = myQuery.values_list('first_name','last_name','serial_number',
+                    'my_class','listening_score','reading_score','score',
                     'quiz','instructor','date')
                     
         for row in rows:
@@ -118,8 +118,8 @@ def start_quiz(request,test_name):
 
         s = Student(quiz =quiz,first_name=request.session.get('first_name'),
                     last_name=request.session.get('last_name'),serial_number=request.session.get('serial_number'),
-                    instructor=request.session.get('instructor'),service=request.session.get('service'),
-                    rank=request.session.get('rank'),listening_score = listeningScore,
+                    instructor=request.session.get('instructor'),my_class=request.session.get('my_class'),
+                    listening_score = listeningScore,
                     reading_score=readingScore, score=totalScore)
         s.save()
         
@@ -142,13 +142,12 @@ def fill_info(request):
     quizes = Quiz.objects.all().order_by('created')
     instructors = Teacher.objects.all()
     if request.POST:
-        print(request.POST)
+        # print(request.POST)
         request.session['first_name'] = request.POST.get('first_name')
         request.session['last_name'] = request.POST.get('last_name')
         request.session['serial_number'] = request.POST.get('serial_number')
-        request.session['service'] = request.POST.get('service')
+        request.session['my_class'] = request.POST.get('my_class')
         request.session['instructor'] = request.POST.get('instructor')
-        request.session['rank'] = request.POST.get('rank')
         test_name = request.POST.get('quiz')
         return redirect(reverse('start_quiz',args=[test_name]))
 
@@ -167,21 +166,20 @@ def grades(request):
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
         date = request.POST.get('date')
-        rank = request.POST.get('rank')
         serial_number = request.POST.get('serial_number')
-        service = request.POST.get('service')
+        my_class = request.POST.get('my_class')
         if date == '':
             students_ls = Student.objects.filter(first_name__icontains=first_name,
                                             last_name__icontains=last_name,
-                                            date__date__lte=datetime.now(),rank__icontains= rank,
+                                            date__date__lte=datetime.now(),
                                             serial_number__icontains=serial_number,
-                                            service__icontains=service).order_by('-date')
+                                            my_class__icontains=my_class).order_by('-date')
         else:
             students_ls = Student.objects.filter(first_name__icontains=first_name,
                                             last_name__icontains=last_name,
-                                            date__date=parser.parse(date),rank__icontains= rank,
+                                            date__date=parser.parse(date),
                                             serial_number__icontains=serial_number,
-                                            service__icontains=service).order_by('-date')
+                                            my_class__icontains=my_class).order_by('-date')
 
     #save all searched id in the current session for later use (exportation to excel file )                                      
     request.session['current_ids_query'] = [st.pk for st in students_ls]

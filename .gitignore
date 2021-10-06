@@ -106,3 +106,4 @@ media/
 *.pyc
 *.db
 *.pid
+assets/
