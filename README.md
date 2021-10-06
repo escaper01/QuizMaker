@@ -48,7 +48,7 @@ In order to make a quiz
 go to http://127.0.0.1:8000/admin
 ```
 
-![Untitled](README/Untitled.png)
+![Untitled](README/Untitled%207.png)
 
 ![Untitled](README/Untitled%201.png)
 
